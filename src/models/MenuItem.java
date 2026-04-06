@@ -1,9 +1,9 @@
 package src.models;
 public class MenuItem {
 
-    private int id;
-    private String name;
-    private double price;
+    private final int id;
+    private final String name;
+    private final double price;
 
     public MenuItem(int id,String name,double price) {
         this.id = id;
