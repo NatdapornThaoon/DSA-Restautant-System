@@ -19,9 +19,9 @@ public class OrderService {
         if (!undoStack.isEmpty()) {
             OrderItem lastItem = undoStack.pop();
             cart.remove(lastItem); // ลบออกจากตะกร้าจริง
-            System.out.println("Cancel add" + lastItem.getMenuName() + " x" + lastItem.getQuantity());
+            System.out.println("Cancel Add" + lastItem.getMenuName() + " x" + lastItem.getQuantity());
         } else {
-            System.out.println( "no items to cancel");
+            System.out.println( "No, Items to cancel");
         }
     }
 }
