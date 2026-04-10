@@ -1,4 +1,4 @@
-package src.structures;
+package main.java.structures;
 
 public class UndoStack {
     

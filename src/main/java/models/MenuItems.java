@@ -1,11 +1,13 @@
-package models;
-public class MenuItem {
+package main.java.models;
+
+public class MenuItems {
+    
 
     private final int id;
     private final String name;
     private final double price;
 
-    public MenuItem(int id,String name,double price) {
+    public MenuItems(int id, String name, double price) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -29,3 +31,5 @@ public class MenuItem {
         return name + "Price: " + price +")";
     }
  }
+    
+
