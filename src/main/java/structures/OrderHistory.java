@@ -1,50 +1,54 @@
 package main.java.structures;
 
+import main.java.models.Order;
+
 public class OrderHistory {
     class Node {
-    KitchenQueue data;
-    Node next,prev;
-    Node (KitchenQueue data){
-        this.data = data;
+        Order data;
+        Node next, prev;
+        
+        Node(Order data) {
+            this.data = data;
+        }
     }
-    }
-    Node head, tail ;
-    private int size = 0;
+    
+    private Node head, tail;
 
-    public void historyOrder(KitchenQueue data){
+    public void addOrder(Order data) {
         Node newNode = new Node(data);
-       if (head == null) {
+        if (head == null) {
             head = tail = newNode;
         } else {
             tail.next = newNode;
             newNode.prev = tail;
             tail = newNode;
         }
-        size++;
     }
-    public void Timehistory(){
+
+    public boolean isEmpty() {
+        return head == null;
+    }
+
+    public void displayForward() {
         if (head == null) {
             System.out.println("Empty");
             return;
         }
-        else{
-            System.out.println("History Order (Time)");
-            Node currtime = head;
-            while (currtime != null) {
-                System.out.println(currtime.data);
-                System.out.println("-----------------------------------");
-                currtime = currtime.next;
+        System.out.println("History Order (Time)");
+        Node currtime = head;
+        while (currtime != null) {
+            System.out.println(currtime.data);
+            System.out.println("-----------------------------------");
+            currtime = currtime.next;
         }
-        
-            }
     }
 
-    public void latestRecursive() {
+    public void displayBackwardRecursive() {
         if (tail == null) {
-            System.out.println("Empty");
+            System.out.println("No Order History");
             return;
         }
-        System.out.println("History Order latest");
+        System.out.println("History Order (Latest)");
         printBackward(tail);
     }
 

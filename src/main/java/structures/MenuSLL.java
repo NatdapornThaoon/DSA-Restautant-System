@@ -39,7 +39,7 @@ public class MenuSLL {
             return;
         }
 
-        System.out.println("---All Menu Items (SLL)---"); 
+        System.out.println("--- All Menu Items ---"); //SLL
         Node current = head;
         while (current != null){
             System.out.println(current.data); //แสดงข้อมูล MenuItem

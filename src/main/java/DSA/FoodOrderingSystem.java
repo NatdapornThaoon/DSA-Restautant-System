@@ -1,32 +1,32 @@
-package src.main;
+package main.java.DSA;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import main.java.models.MenuItems;
 
-import models.MenuItem;
-import models.Order;
-import models.OrderItem;
-import structures.MenuSLL;
-import structures.MenuCLL;
-import structures.UndoStack;
-import structures.KitchenQueue;
-import structures.OrderHistory;
-import util.InputHelper;
+import main.java.models.Order;
+import main.java.models.OrderItem;
+import main.java.structures.MenuSLL;
+import main.java.structures.MenuCLL;
+import main.java.structures.UndoStack;
+import main.java.structures.KitchenQueue;
+import main.java.structures.OrderHistory;
+import main.java.util.InputHelper;
 
 
 public class FoodOrderingSystem {
     private final Scanner scanner;
     private final InputHelper inputHelper;
-    
     private final MenuSLL fullMenu;
     private final MenuCLL recommendMenu;
     private final List<OrderItem> cart;
     private final UndoStack undoStack;
     private final KitchenQueue kitchenQueue;
     private final OrderHistory history;
-    
-    public FoodOrderingSystem() {
+    private int orderCounter = 1000;
+
+     public FoodOrderingSystem() {
         this.scanner = new Scanner(System.in);
         this.inputHelper = new InputHelper(scanner);
         
@@ -39,22 +39,22 @@ public class FoodOrderingSystem {
         
         loadMenuData();
     }
+
+     private void loadMenuData() {
     
-    private void loadMenuData() {
-    
-        fullMenu.add(new MenuItem(1, "Fried Rice", 50));
-        fullMenu.add(new MenuItem(2, "Tom Yum Goong", 120));
-        fullMenu.add(new MenuItem(3, "Green Curry", 80));
-        fullMenu.add(new MenuItem(4, "Pad Thai", 60));
-        fullMenu.add(new MenuItem(5, "Som Tam", 45));
+        fullMenu.add(new MenuItems(1, "Fried Rice", 50));
+        fullMenu.add(new MenuItems(2, "Tom Yum Goong", 120));
+        fullMenu.add(new MenuItems(3, "Green Curry", 80));
+        fullMenu.add(new MenuItems(4, "Pad Thai", 60));
+        fullMenu.add(new MenuItems(5, "Som Tam", 45));
         
         
-        recommendMenu.add(new MenuItem(3, "Green Curry", 80));
-        recommendMenu.add(new MenuItem(1, "Fried Rice", 50));
-        recommendMenu.add(new MenuItem(4, "Pad Thai", 60));
+        recommendMenu.add(new MenuItems(3, "Green Curry", 80));
+        recommendMenu.add(new MenuItems(1, "Fried Rice", 50));
+        recommendMenu.add(new MenuItems(4, "Pad Thai", 60));
     }
-    
-    public void start() {
+
+     public void start() {
         while (true) {
             displayMainMenu();
             int choice = inputHelper.getIntInput("Choose: ");
@@ -73,8 +73,8 @@ public class FoodOrderingSystem {
             }
         }
     }
-    
-    private void displayMainMenu() {
+
+     private void displayMainMenu() {
         System.out.println("\n=== Food Ordering System ===");
         System.out.println("1. Show all menu + rotating recommendations");
         System.out.println("2. Add food to cart");
@@ -82,7 +82,7 @@ public class FoodOrderingSystem {
         System.out.println("4. Show order history");
         System.out.println("5. Exit");
     }
-    
+
     private void showMenuWithRecommendations() {
         System.out.println();
         fullMenu.display();
@@ -97,30 +97,30 @@ public class FoodOrderingSystem {
         }
         inputHelper.waitForEnter();
     }
-    
-    private void addToCart() {
+
+     private void addToCart() {
         System.out.println();
         fullMenu.display();
         
         int itemId = inputHelper.getIntInput("\nEnter food ID (0=cancel): ");
         if (itemId == 0) return;
         
-        MenuItem selectedItem = fullMenu.findById(itemId);
+        MenuItems selectedItem = fullMenu.findById(itemId);
         if (selectedItem == null) {
             System.out.println("Food ID not found");
             return;
         }
-        
+
         int quantity = inputHelper.getIntInput("Quantity: ");
         if (quantity <= 0) {
             System.out.println("Quantity must be greater than 0");
             return;
         }
-        
-        OrderItem newItem = new OrderItem(selectedItem, quantity);
+
+         OrderItem newItem = new OrderItem(selectedItem, quantity);
         cart.add(newItem);
         
-        String action = "Added " + selectedItem.name + " x" + quantity;
+        String action = "Added " + selectedItem.getName() + " x" + quantity;
         undoStack.push(action);
         System.out.println(  action + " added to cart");
         
@@ -129,17 +129,7 @@ public class FoodOrderingSystem {
             performUndo();
         }
     }
-    
-    private void performUndo() {
-        String lastAction = undoStack.pop();
-        if (lastAction != null && !cart.isEmpty()) {
-            cart.remove(cart.size() - 1);
-            System.out.println(" Undo: " + lastAction);
-        } else {
-            System.out.println(" Nothing to undo");
-        }
-    }
-    
+
     private void displayCartSummary() {
         System.out.println("\n--- Cart Summary ---");
         double total = 0;
@@ -150,7 +140,7 @@ public class FoodOrderingSystem {
         System.out.println("-----------------------------------");
         System.out.printf("Total: %.2f THB\n", total);
     }
-    
+
     private void askToShowKitchenQueue() {
         String answer = inputHelper.getStringInput("\nDo you want to see kitchen queue? (y/n): ");
         if (answer.equalsIgnoreCase("y")) {
@@ -161,7 +151,7 @@ public class FoodOrderingSystem {
             }
         }
     }
-    
+
     private void checkout() {
         if (cart.isEmpty()) {
             System.out.println("\nCart is empty. Cannot checkout");
@@ -175,20 +165,24 @@ public class FoodOrderingSystem {
             System.out.println("Checkout cancelled");
             return;
         }
+
+        Order order = new Order(orderCounter++);
+        for (OrderItem item : cart) {
+            order.addItem(item);
+        }
         
-        Order order = new Order(new ArrayList<>(cart));
         history.addOrder(order);
         kitchenQueue.addOrder(order);
         
-        System.out.println("Order successful! Order #" + order.orderId);
+        System.out.println("Order successful! Order #" + order.getId());
         
         cart.clear();
         undoStack.clear();
         
         askToShowKitchenQueue();
     }
-    
-    private void showOrderHistory() {
+
+     private void showOrderHistory() {
         if (history.isEmpty()) {
             System.out.println("\nNo order history");
             inputHelper.waitForEnter();
@@ -200,18 +194,33 @@ public class FoodOrderingSystem {
         int choice = inputHelper.getIntInput("Choose: ");
         
         System.out.println();
-        if (choice == 1) {
-            history.displayForward();
-        } else if (choice == 2) {
-            history.displayBackwardRecursive();
-        } else {
-            System.out.println("Invalid choice");
+        switch (choice) {
+            case 1 -> history.displayForward();
+            case 2 -> history.displayBackwardRecursive();
+            default -> System.out.println("Invalid choice");
         }
         inputHelper.waitForEnter();
     }
-    
-    public static void main(String[] args) {
+
+     public static void main(String[] args) {
         FoodOrderingSystem system = new FoodOrderingSystem();
         system.start();
     }
+
+    private void performUndo() {
+        if (cart.isEmpty()) {
+            System.out.println("Nothing to undo");
+            return;
+        }
+        
+        cart.remove(cart.size() - 1);
+        String action = undoStack.pop();
+        
+        if (action != null) {
+            System.out.println("Undone: " + action);
+        }
+    }
+    
+
+    
 }

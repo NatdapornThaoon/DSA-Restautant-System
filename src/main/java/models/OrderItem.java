@@ -16,6 +16,6 @@ public class OrderItem {
 
     @Override
     public String toString() {
-        return item.getName() + "x" + quantity + " = " +getTotal();
+        return item.getName() + "x" + quantity + " = " +getTotal() + " THB";
     }
 }

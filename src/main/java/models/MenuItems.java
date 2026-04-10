@@ -28,7 +28,7 @@ public class MenuItems {
 
     @Override
     public String toString() {
-        return name + "Price: " + price +")";
+        return id + ". " + name + " (Price: " + price + " THB)";
     }
  }
     

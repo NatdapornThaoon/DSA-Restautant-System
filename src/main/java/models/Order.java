@@ -17,11 +17,23 @@ public class Order {
         this.timestamp = new Date();
     }
 
+    public Order(Object orderID2) {
+        this.orderId = (Integer) orderID2;
+        this.items = new ArrayList<>();
+        this.total = 0.0;
+        this.timestamp = new Date();
+    }
+
     public void addItem(OrderItem item) {
         items.add(item);
         calculateTotal();
     }
-
+    public double getTotalPrice() {
+        return total;
+    }
+    public int getId(){
+        return orderId;
+    }
     private void calculateTotal() {
         total = 0;
         for (OrderItem item : items) {
