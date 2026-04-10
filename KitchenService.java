@@ -13,21 +13,21 @@ public class KitchenService {
     public void processPayment(Order currentOrder, Scanner sc) {
         // --- กรณี: ตะกร้าว่าง (อ้างอิง image_128a85.png) ---
         if (currentOrder == null || currentOrder.isEmpty()) {
-            System.out.println("\nตะกร้าว่าง ไม่สามารถชำระเงินได้");
+            System.out.println("\nCart is empty. Unable to pay.");
             return;
         }
 
         // --- แสดงรายการในตะกร้าก่อนชำระเงิน ---
-        System.out.println("\n--- รายการในตะกร้า ---");
+        System.out.println("\n--- Items in cart---");
         currentOrder.printItems(); // สมมติว่าใน class Order มี method นี้
-        System.out.println("รวมทั้งสิ้น: " + currentOrder.getTotalPrice() + " THB");
+        System.out.println("total: " + currentOrder.getTotalPrice() + " THB");
 
         // --- ยืนยันการสั่งซื้อ (อ้างอิง image_128d51.png) ---
-        System.out.print("\nยืนยันการสั่งซื้อ (y/n): ");
+        System.out.print("\nOrder confirmation (y/n): ");
         String confirm = sc.next();
 
         if (confirm.equalsIgnoreCase("n")) {
-            System.out.println("ยกเลิกการชำระเงิน");
+            System.out.println("Cancel");
             return;
         }
 
@@ -37,8 +37,8 @@ public class KitchenService {
             kitchenQueue.enqueue(currentOrder);
 
             // แสดงสถานะสำเร็จ (อ้างอิง image_128c8.png)
-            System.out.println("✅ ออเดอร์ #" + currentOrder.getOrderId() + " ส่งเข้าครัวแล้ว");
-            System.out.println("🎉 สั่งซื้อสำเร็จ! ออเดอร์ #" + currentOrder.getOrderId());
+            System.out.println("Order" + currentOrder.getOrderId() + " Sent to the kitchen");
+            System.out.println(" Order successful" + currentOrder.getOrderId());
 
             // ส่วนการจัดการคิวครัว
             askToShowQueue(sc);
@@ -47,24 +47,24 @@ public class KitchenService {
     }
 
     private void askToShowQueue(Scanner sc) {
-        System.out.print("\nต้องการแสดงคิวครัวหรือไม่? (y/n): ");
+        System.out.print("\nWant to show the kitchen queue?(y/n): ");
         if (sc.next().equalsIgnoreCase("y")) {
-            System.out.println("\n📋 คิวครัว:");
+            System.out.println("\n Kitchen queue:");
             kitchenQueue.displayQueue();
         }
     }
 
     private void askToProcessNextOrder(Scanner sc) {
-        System.out.print("\nต้องการทำอาหารออเดอร์ถัดไปหรือไม่? (y/n): ");
+        System.out.print("\nWant to cook your next order?(y/n): ");
         if (sc.next().equalsIgnoreCase("y")) {
             Order nextOrder = kitchenQueue.dequeue();
             if (nextOrder != null) {
                 // แสดงเวลาปัจจุบันแบบในรูป
-                System.out.println("🍳 กำลังทำ: Order #" + nextOrder.getOrderId() + " (" + new Date() + ")");
+                System.out.println(" Cooking: Order #" + nextOrder.getOrderId() + " (" + new Date() + ")");
                 nextOrder.printItems();
                 System.out.println("Total: " + nextOrder.getTotalPrice() + " THB");
             } else {
-                System.out.println("ไม่มีออเดอร์ค้างในคิว");
+                System.out.println("No , Orders left in the queue");
             }
         }
     }

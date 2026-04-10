@@ -41,12 +41,12 @@ public class KitchenQueue {
     // แสดงรายการคิวทั้งหมด
     public void displayQueue() {
         if (isEmpty()) {
-            System.out.println("ไม่มีคิวในขณะนี้");
+            System.out.println("No queue");
             return;
         }
         Node current = head;
         while (current != null) {
-            System.out.println("Order #" + current.order.getOrderId() + " (รวม " + current.order.getTotalPrice() + " THB)");
+            System.out.println("Order #" + current.order.getOrderId() + " (Total " + current.order.getTotalPrice() + " THB)");
             current = current.next;
         }
     }
