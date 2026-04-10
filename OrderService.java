@@ -12,16 +12,16 @@ public class OrderService {
     public void addItemToCart(OrderItem item) {
         cart.add(item);
         undoStack.push(item); // เก็บไว้ใน stack เพื่อให้ undo ได้
-        System.out.println("✅ เพิ่ม " + item.getMenuName() + " x" + item.getQuantity() + " ลงตะกร้าแล้ว");
+        System.out.println("Add " + item.getMenuName() + " x" + item.getQuantity() + " Added to cart");
     }
 
     public void undoLastAction() {
         if (!undoStack.isEmpty()) {
             OrderItem lastItem = undoStack.pop();
             cart.remove(lastItem); // ลบออกจากตะกร้าจริง
-            System.out.println("🔄 ยกเลิก: เพิ่ม " + lastItem.getMenuName() + " x" + lastItem.getQuantity());
+            System.out.println("Cancel add" + lastItem.getMenuName() + " x" + lastItem.getQuantity());
         } else {
-            System.out.println("❌ ไม่มีรายการให้ยกเลิก");
+            System.out.println( "no items to cancel");
         }
     }
 }
