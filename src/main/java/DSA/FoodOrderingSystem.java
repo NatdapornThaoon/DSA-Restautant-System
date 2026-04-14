@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import main.java.models.MenuItems;
-
 import main.java.models.Order;
 import main.java.models.OrderItem;
-import main.java.structures.MenuSLL;
-import main.java.structures.MenuCLL;
-import main.java.structures.UndoStack;
 import main.java.structures.KitchenQueue;
+import main.java.structures.MenuCLL;
+import main.java.structures.MenuSLL;
 import main.java.structures.OrderHistory;
+import main.java.structures.UndoStack;
 import main.java.util.InputHelper;
 
 
@@ -52,6 +51,8 @@ public class FoodOrderingSystem {
         recommendMenu.add(new MenuItems(3, "Green Curry", 80));
         recommendMenu.add(new MenuItems(1, "Fried Rice", 50));
         recommendMenu.add(new MenuItems(4, "Pad Thai", 60));
+
+        
     }
 
      public void start() {
@@ -60,16 +61,16 @@ public class FoodOrderingSystem {
             int choice = inputHelper.getIntInput("Choose: ");
             
             switch (choice) {
-                case 1 -> showMenuWithRecommendations();
-                case 2 -> addToCart();
-                case 3 -> checkout();
-                case 4 -> showOrderHistory();
-                case 5 -> {
+                case 1 : showMenuWithRecommendations(); break;
+                case 2 : addToCart(); break;
+                case 3 : checkout(); break;
+                case 4 : showOrderHistory(); break; 
+                case 5 : {
                     System.out.println("\nThank you for using our service!");
                     scanner.close();
                     return;
                 }
-                default -> System.out.println("Invalid choice");
+                default : System.out.println("Invalid choice"); break;
             }
         }
     }
@@ -195,9 +196,9 @@ public class FoodOrderingSystem {
         
         System.out.println();
         switch (choice) {
-            case 1 -> history.displayForward();
-            case 2 -> history.displayBackwardRecursive();
-            default -> System.out.println("Invalid choice");
+            case 1 : history.displayForward(); break;
+            case 2 : history.displayBackwardRecursive(); break;
+            default : System.out.println("Invalid choice"); break;
         }
         inputHelper.waitForEnter();
     }
