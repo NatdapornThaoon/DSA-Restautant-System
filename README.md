@@ -1,4 +1,4 @@
-# **Food Ordering System** (Group 5 OODP Project)
+# **Food Ordering System** 
 
 A robust Food Ordering System developed using Object-Oriented Design & Programming (OODP) principles. This project focuses on implementing custom data structures such as Linked Lists, Stacks, and Queues to manage menus, orders, and kitchen workflows efficiently.
 
