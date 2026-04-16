@@ -1,8 +1,8 @@
-package main.java.structures;
+package structures;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
-import main.java.models.Order;
+import models.Order;
 
 public class KitchenQueue {
     private final Queue<Order> queue = new ArrayDeque<>();  // ใช้ Queue ของ Java
@@ -41,7 +41,3 @@ public class KitchenQueue {
         return queue.isEmpty();
     }
 }
-
-
-
-

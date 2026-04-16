@@ -1,6 +1,8 @@
-package main.java.structures;
+package structures;
 
-import main.java.models.Order;
+import java.util.ArrayList;
+import java.util.List;
+import models.Order;
 
 public class OrderHistory {
     class Node {
@@ -60,4 +62,21 @@ public class OrderHistory {
 
         printBackward(node.prev);
     }
+
+    //TEST --------------------------------- OODP
+    public List<String> toFileLines() {
+        List<String> lines = new ArrayList<>();
+        Node current = head;
+        while (current != null){
+            lines.add("Order #" + current.data.getId() + " | " + current.data.toString() + " | " + current.data.getTotalPrice() + " THB");
+            current = current.next;
+        }
+        return lines;
+    }
+
+
+
+
+
+
 }

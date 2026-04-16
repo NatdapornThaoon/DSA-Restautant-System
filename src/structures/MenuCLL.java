@@ -1,6 +1,6 @@
-package main.java.structures;
+package structures;
 
-import main.java.models.MenuItems;
+import models.MenuItems;
 
 public class MenuCLL {
     private Node current; // ชี้ไป node ปัจจุบันในวงกลม
